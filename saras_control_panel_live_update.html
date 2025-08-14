@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sara's Control Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+        }
+        .button-group {
+            text-align: center;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #555;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover:enabled {
+            background-color: #333;
+        }
+        .task-section {
+            background-color: white;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        .task-section h2 {
+            margin-top: 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sara's Control Panel</h1>
+    <p style="text-align: center;">Control Panel for generating Mark's monthly task calendar.</p>
+
+    <div class="button-group">
+        <button id="newMonth">Generate New Month</button>
+        <button id="repeatToday">Repeat Today</button>
+        <button id="punishTomorrow">Punish Tomorrow</button>
+        <button id="lockDevice">Lock Device</button>
+        <button id="unlockDevice">Unlock Device</button>
+    </div>
+
+    <div class="task-section">
+        <h2>Today's Task (Sara View)</h2>
+        <p><strong>Primary task:</strong> <span id="primaryTask"></span></p>
+        <p><strong>Optional Humiliation Task:</strong> <span id="humiliationTask"></span></p>
+    </div>
+
+    <script>
+        const primaryTasks = [
+            "Clean the kitchen",
+            "Do the laundry",
+            "Vacuum the living room",
+            "Organize the closet",
+            "Wash the car",
+            "Cook dinner"
+        ];
+        const humiliationTasks = [
+            "Wear silly hat while working",
+            "Sing a song loudly",
+            "Write a poem about Sara",
+            "Do 20 jumping jacks in public",
+            "Speak in rhyme for an hour"
+        ];
+
+        function getRandomTask(tasks) {
+            return tasks[Math.floor(Math.random() * tasks.length)];
+        }
+
+        function fillTasks() {
+            document.getElementById("primaryTask").textContent = getRandomTask(primaryTasks);
+            document.getElementById("humiliationTask").textContent = getRandomTask(humiliationTasks);
+        }
+
+        document.getElementById("newMonth").onclick = function() {
+            fillTasks();
+        };
+
+        document.getElementById("repeatToday").onclick = function() {
+            const primary = document.getElementById("primaryTask").textContent;
+            const humiliation = document.getElementById("humiliationTask").textContent;
+            alert("Tomorrow's task will be the same as today:
+Primary: " + primary + "
+Humiliation: " + humiliation);
+        };
+
+        document.getElementById("punishTomorrow").onclick = function() {
+            document.getElementById("primaryTask").textContent = "Extra chore as punishment";
+            document.getElementById("humiliationTask").textContent = getRandomTask(humiliationTasks);
+        };
+
+        document.getElementById("lockDevice").onclick = function() {
+            document.querySelectorAll("button").forEach(btn => {
+                if (btn.id !== "unlockDevice") btn.disabled = true;
+            });
+        };
+
+        document.getElementById("unlockDevice").onclick = function() {
+            document.querySelectorAll("button").forEach(btn => btn.disabled = false);
+        };
+
+        // Fill tasks immediately on page load
+        window.onload = fillTasks;
+    </script>
+
+</body>
+</html>
